@@ -5,17 +5,22 @@ import { useRxjs } from "../context/RxjsContext";
 const Component1 = () => {
   const { emitData, createSubj, removeSubj } = useRxjs();
 
-  //Le key che permettono ti distinguere i vari eventi senza sovrapporli o affidarli allo stesso subject
+  /**
+   * Vengono dichiarate le Key che serviranno a creare e identificare i vari Subject
+   */
   const key = "send-data";
   const key2 = "send-data2";
   const key3 = "disable-component";
   const key4 = "send-data3";
+
+  /**Lo useEffect che viene lanciato al render del Component1 crea 4 subject che verrano poi riutilizzati all'interno del codice */
   useEffect(() => {
     createSubj(key);
     createSubj(key2);
     createSubj(key3);
     createSubj(key4);
 
+    /**Quando il componente viene smontato, rimuoviamo i relativi subject creati, che non verranno più utilizzati */
     return () => {
       removeSubj(key);
       removeSubj(key2);
@@ -24,21 +29,43 @@ const Component1 = () => {
     };
   }, []);
 
+  /**
+   *
+   */
   const onClick = () => {
     emitData(key, `Data sent! ${Math.random()}`);
   };
+
+  /**
+   * Viene inviato un numero casuale all'obserer iscritto al/ai subject con key2
+   */
   const onClick2 = () => {
     emitData(key2, `Data sent! ${Math.random() * 1000}`);
   };
+
+  /**
+   *
+   * @param {boolean} v Il valore fornito dallo switch
+   *
+   * Invia un booleano all'observer iscritto al/ai subject con key3
+   */
   const onSwitch = (v) => {
     console.log("v", v);
     emitData(key3, v);
   };
 
-  const onChange = (v) => {
-    console.log("Value changed", v.target.value);
-    emitData(key4, v.target.value);
+  /**
+   *
+   * @param {*} e evento scaturito dall'input
+   *
+   * Al cambiare del contenuto dell'input aggiorna la stringa inviandola all'observer/agli observer con key4
+   */
+  const onChange = (e) => {
+    console.log("Value changed", e.target.value);
+    emitData(key4, e.target.value);
   };
+
+  /**Vengono renderizzati per testare i bottoni, lo switch, e l'input che comunicano con gli altri componenti */
   return (
     <>
       <div style={{ border: "2px solid red", padding: "10px" }}>

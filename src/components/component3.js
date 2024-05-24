@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useRxjs } from "../context/RxjsContext";
 
@@ -6,6 +7,9 @@ const Component3 = () => {
   const { getSubject } = useRxjs();
   const [text, setText] = useState("");
 
+  /**
+   * Viene recuperato e sottiscritto il subject con key4
+   */
   useEffect(() => {
     console.log("Mounted component 3");
     const subject = getSubject(key4);

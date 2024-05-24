@@ -4,6 +4,7 @@ import Component1 from "./components/component1";
 import Component2 from "./components/component2";
 
 function App() {
+  /**Per semplcità viene svolto tutto all'interno dell'App.js */
   return (
     <RxjsProvider>
       <h1>Parent</h1>
